@@ -18,51 +18,18 @@ import {postBook, updateBook, deleteBook} from './actions/booksActions';
 
 // Step 1 create the store
 const middleware = applyMiddleware(thunk, logger);
-const store = createStore(reducers, middleware);
+// WE WILL PASS INITIAL STATE FROM THE SERVER STORE
+const initialState = window.INITIAL_STATE;
+const store = createStore(reducers, initialState, middleware);
 
-import BooksList from './components/pages/booksList';
-import Cart from './components/pages/cart';
-import BookForm from './components/pages/bookForm';
-import Main from './main';
+import routes from './routes';
 
 const Routes = (
   <Provider store={store}>
-      <Router history={browserHistory}>
-        <Route path="/" component={Main}>
-          <IndexRoute component={BooksList}/>
-          <Route path="/admin" component={BookForm}/>
-          <Route path="/cart" component={Cart}/>
-        </Route>
-      </Router>
+    {routes}
   </Provider>
 )
 
 render(
   Routes, document.getElementById('app')
 );
-
-// Step 2 create and dispatch actions
-
-// -->> BOOK ACTIONS <<--
-
-// Add a book
-// store.dispatch(postBook(
-
-// ))
-
-// // Delete a book
-// store.dispatch(deleteBook(
-//   {id: 1}
-// ))
-
-// // Update a book
-// store.dispatch(updateBook(
-//   {
-//     id: 2,
-//     title: "Learn React and Redux"
-//   }
-// ))
-
-// // -->> CART ACTIONS <<--
-// // ADD to cart
-// store.dispatch(addToCart([{id: 1}]));
